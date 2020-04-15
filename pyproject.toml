@@ -4,13 +4,24 @@ version = "0.0.1"
 description = "a command line utility for bootstrapping projects with git"
 authors = ["Bolaji Olajide"]
 license = "MIT"
+repository = "https://github.com/BolajiOlajide/hiel"
+classifiers = [
+    "Programming Language :: Python :: 3.6"
+]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "3.6.8"
 typer = "^0.1.1"
+requests = "^2.23.0"
 
 [tool.poetry.dev-dependencies]
 black = "^19.10b0"
+pytest-sugar = "^0.9.2"
+pytest = "^5.4.1"
+
+[tool.poetry.scripts]
+hiel = "hiel.cli:main"
 
 [build-system]
 requires = ["poetry>=0.12"]
