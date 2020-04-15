@@ -2,11 +2,18 @@ import os
 
 import typer
 
-from hiel.utils import PYTHON_EDITOR_CONFIG, JAVASCRIPT_EDITOR_CONFIG, ProjectTypes
+from hiel.utils import (
+    PYTHON_EDITOR_CONFIG,
+    JAVASCRIPT_EDITOR_CONFIG,
+    ProjectTypes,
+    PYTHON_GITIGNORE,
+    JAVASCRIPT_GITIGNORE,
+)
 
 
 class Bootstrap:
     def __init__(self, project_name: str, progress, project_type: ProjectTypes):
+        self.cwd = os.getcwd()
         self.project_name = project_name
         self.project_type = project_type
         self.progress = progress
@@ -30,16 +37,38 @@ class Bootstrap:
         self.create_readme()
 
     def create_readme(self):
+        message = f"Creating a `README.md` for {self.project_name}."
+        typer.secho(message, fg=typer.colors.GREEN, bold=True)
+
         readme_location = f"{self.project_location}/README.md"
-        with open(readme_location, 'w') as readme:
+        with open(readme_location, "w") as readme:
             readme.write(f"# {self.project_name.upper()}")
             readme.write("")
 
     def create_editorconfig(self):
+        message = f"Creating a `.editorconfig` for {self.project_name}."
+        typer.secho(message, fg=typer.colors.GREEN, bold=True)
+
         editorconfig_location = f"{self.project_location}/.editorconfig"
-        with open(editorconfig_location, 'w') as editorconfig:
+        with open(editorconfig_location, "w") as editorconfig:
             if self.project_type == ProjectTypes.js:
                 editorconfig.write(JAVASCRIPT_EDITOR_CONFIG)
             elif self.project_type == ProjectTypes.py:
                 editorconfig.write(PYTHON_EDITOR_CONFIG)
             editorconfig.write("")
+
+    def create_gitignore(self):
+        message = f"Creating a `.gitignore` for {self.project_name}."
+        typer.secho(message, fg=typer.colors.GREEN, bold=True)
+
+        gitignore_location = f"{self.project_location}/.gitignore"
+        with open(gitignore_location, "w") as gitignore:
+            if self.project_type == ProjectTypes.js:
+                gitignore.write(JAVASCRIPT_GITIGNORE)
+            elif self.project_type == ProjectTypes.py:
+                gitignore.write(PYTHON_GITIGNORE)
+            gitignore.write("")
+
+    def initialize_git(self):
+        os.chdir(self.project_location)
+        os.system("git init")

@@ -16,11 +16,12 @@ def version_callback(value: bool):
         typer.echo(f"Hiel Version: {__version__}")
         raise typer.Exit()
 
+
 @app.command()
 def create(
     name: str,
     type: ProjectTypes = typer.Option(None),
-    version: bool = typer.Option(None, "--version", callback=version_callback)
+    version: bool = typer.Option(None, "--version", callback=version_callback),
 ) -> None:
     """Bootstrap a project and push to Github"""
     with typer.progressbar(range(100), label="Processing") as progress:
