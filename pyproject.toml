@@ -2,13 +2,15 @@
 name = "hiel"
 version = "0.0.1"
 description = "a command line utility for bootstrapping projects with git"
-authors = ["Bolaji Olajide <cooproton@gmail.com>"]
+authors = ["Bolaji Olajide"]
 license = "MIT"
 
 [tool.poetry.dependencies]
-python = "3.4"
+python = "3.6.8"
+typer = "^0.1.1"
 
 [tool.poetry.dev-dependencies]
+black = "^19.10b0"
 
 [build-system]
 requires = ["poetry>=0.12"]
