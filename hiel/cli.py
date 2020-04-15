@@ -1,6 +1,3 @@
-import os
-from pathlib import Path
-
 import typer
 
 from hiel import __version__
@@ -21,6 +18,7 @@ def version_callback(value: bool):
 def create(
     name: str,
     type: ProjectTypes = typer.Option(None),
+    # private: bool = typer.O
     version: bool = typer.Option(None, "--version", callback=version_callback),
 ) -> None:
     """Bootstrap a project and push to Github"""

@@ -2,6 +2,7 @@ import os
 
 import typer
 
+from hiel.services.github import Github
 from hiel.utils import (
     PYTHON_EDITOR_CONFIG,
     JAVASCRIPT_EDITOR_CONFIG,
@@ -23,8 +24,14 @@ class Bootstrap:
     def create(self):
         self.progress.update(5)  # total = 15
         self.create_project_directory()
+        repository = Github(self.project_name).create_repository()
         if self.project_type:
             self.create_editorconfig()
+            self.create_gitignore()
+        self.initialize_git()
+        # initialize_project
+        # push to repository
+        os.chdir(self.project_location)
 
     def create_project_directory(self):
         self.project_location = os.path.join(os.getcwd(), self.project_name)
@@ -70,5 +77,8 @@ class Bootstrap:
             gitignore.write("")
 
     def initialize_git(self):
+        message = f"Initializing `git` for {self.project_name}."
+        typer.secho(message, fg=typer.colors.GREEN, bold=True)
+
         os.chdir(self.project_location)
         os.system("git init")
