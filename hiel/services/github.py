@@ -15,7 +15,7 @@ class Github:
         self.validate_access_token()
         repository_details = self._create_repository()
         typer.secho("Successfully created the repository on Github", fg=typer.colors.GREEN, bold=True)
-        return f"https://github.com/{repository_details}"
+        return repository_details
 
     def _create_repository(self):
         try:
@@ -28,7 +28,7 @@ class Github:
             _response = requests.post(url, data=json.dumps(data), headers=headers)
             response = _response.json()
             if _response.ok:
-                return response
+                return response["ssh_url"]
             error_message = f"""{response["message"]}
 {response["errors"][0]["message"]}
 """
@@ -53,6 +53,7 @@ class Github:
             typer.secho(message, fg=typer.colors.RED, bold=True)
             access_token = typer.prompt("Enter an access token.")
             with open(config_path, "w") as config_file:
+                typer.secho("Saving the access_token in $HOME/.hiel", fg=typer.colors.GREEN, bold=True)
                 config_file.write(access_token)
 
         self.access_token = access_token
