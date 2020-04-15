@@ -90,7 +90,7 @@ class Bootstrap:
         typer.secho(message, fg=typer.colors.GREEN, bold=True)
 
         os.system("git add .")
-        os.system("git commit -m \"initial commit ✨\"")
+        os.system('git commit -m "initial commit ✨"')
         os.system("git push origin master")
 
     def initialize_project(self):
